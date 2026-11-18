@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Di Antara Rasa dan Kata</title>
+
+    <style>
+        /*  PENGATURAN DASAR */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: linear-gradient(135deg, #fff0f3, #fce4ec, #fff7ed);
+            min-height: 100vh;
+            color: #754653;
+            overflow-x: hidden;
+        }
+
+        /*  BAGIAN UTAMA */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .flower {
+            font-size: 55px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: clamp(30px, 6vw, 48px);
+            margin: 20px 0 12px;
+            color: #a64d69;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            font-style: italic;
+            color: #956b76;
+            margin-bottom: 30px;
+        }
+
+        /* KARTU PUISI */
+        .poem-card {
+            background: rgba(255, 255, 255, 0.75);
+            width: 100%;
+            max-width: 550px;
+            padding: 35px 25px;
+            border-radius: 22px;
+            box-shadow: 0 10px 35px rgba(166, 77, 105, 0.13);
+            border: 1px solid #ffffff;
+        }
+
+        .poem-title {
+            font-size: 23px;
+            margin-bottom: 22px;
+            color: #a64d69;
+        }
+
+        .poem-text {
+            line-height: 2;
+            font-size: 16px;
+            white-space: pre-line;
+            color: #75515d;
+            min-height: 150px;
+        }
+
+        /* 4. TOMBOL */
+        button {
+            border: none;
+            background: #c87591;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 12px 5px 0;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #a64d69;
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #a47b86;
+        }
+
+        /* ANIMASI BUNGA */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /*  ANIMASI KELOMPOK */
+        .petal {
+            position: fixed;
+            top: -30px;
+            pointer-events: none;
+            animation: fall linear forwards;
+            z-index: 2;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /*  TAMPILAN HP */
+        @media (max-width: 480px) {
+            .poem-card {
+                padding: 28px 18px;
+            }
+
+            .poem-text {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="flower">🌷</div>
+
+        <h1>Di Antara Rasa dan Kata</h1>
+
+        <p class="subtitle">
+            Setiap rasa punya cerita, setiap cerita punya kata.
+        </p>
+
+        <div class="poem-card">
+
+            <h2 class="poem-title" id="judul">
+                Tentang Rasa
+            </h2>
+            <p class="poem-text" id="isiPuisi">
+                Tidak semua yang indah harus dimiliki,
+                tidak semua cerita harus kembali.
+                Ada yang cukup disimpan,
+                sebagai kenangan dalam hati.
+            </p>
+
+            <button onclick="gantiPuisi()">
+                Puisi Berikutnya ✨
+            </button>
+
+            <button onclick="buatKelopak()">
+                Kirim Bunga 🌸
+            </button>
+
+        </div>
+
+        <p class="footer">
+            Dibuat dengan sepenuh rasa ♡
+        </p>
+
+    </div>
+
+    <script>
+        // MENYIMPAN KUMPULAN PUISI
+
+        const puisi = [
+            {
+                judul: "Tentang Rasa",
+                isi: `Ada hal yang tak mampu dijelaskan,
+meski ribuan kata telah dituliskan.
+Ada rasa yang memilih diam,
+bukan karena tak ingin disampaikan.
+Hanya saja,
+terkadang hati punya bahasanya sendiri.`
+            },
+
+            {
+                judul: "Di Balik Senja",
+                isi: `Senja selalu tahu cara berpamitan,
+tanpa harus menjelaskan alasan.
+Langit berubah warna,
+namun tetap menyimpan keindahannya.
+Mungkin begitu pula manusia,
+yang tersenyum meski menyimpan cerita.`
+            },
+
+            {
+                judul: "Tentang Waktu",
+                isi: `Waktu tidak pernah benar-benar berhenti,
+ia hanya mengajarkan kita memahami.
+Bahwa tidak semua harus dimiliki,
+dan tidak semua harus kembali.
+Sebab setiap perjalanan,
+selalu punya cerita untuk dikenang.`
+            }
+        ];
+
+        // MENGHITUNG NOMOR PUISI
+
+        let nomorPuisi = 0;
+
+        // FUNGSI MENGGANTI PUISI
+
+        function gantiPuisi() {
+
+            nomorPuisi++;
+
+            if (nomorPuisi >= puisi.length) {
+                nomorPuisi = 0;
+            }
+
+            document.getElementById("judul").textContent =
+                puisi[nomorPuisi].judul;
+
+            document.getElementById("isiPuisi").textContent =
+                puisi[nomorPuisi].isi;
+        }
+ 
+       // FUNGSI MEMBUAT KELopak BUNGA
+
+        function buatKelopak() {
+
+            const kelopak = document.createElement("div");
+
+            kelopak.classList.add("petal");
+            kelopak.textContent = "🌸";
+
+            kelopak.style.left = Math.random() * 100 + "vw";
+            kelopak.style.fontSize =
+                (15 + Math.random() * 20) + "px";
+
+            kelopak.style.animationDuration =
+                (3 + Math.random() * 4) + "s";
+
+            document.body.appendChild(kelopak);
+
+            setTimeout(() => {
+                kelopak.remove();
+            }, 7000);
+        }
+
+    </script>
+
+</body>
+</html>
